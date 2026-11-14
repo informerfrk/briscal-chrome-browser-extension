@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Newsletter – Test Shop</title>
+<style>
+  body { font-family: sans-serif; margin: 20px; }
+  .hidden { display: none; }
+  .tall { height: 2500px; }
+  .fancy input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .fancy span { display: inline-block; padding: 6px 10px; border: 1px solid #888; cursor: pointer; }
+  #cover { position: fixed; inset: 0; background: rgba(0, 0, 0, .3); display: none; }
+  label { margin-right: 6px; }
+</style>
+</head>
+<body>
+<h1>Join our newsletter</h1>
+<nav><a href="/article.html">Read the article</a> · <a href="/page2.html?from=blank" target="_blank">Open page 2 in a new tab</a></nav>
+<form id="f">
+  <p><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com"></p>
+  <p><label for="pw">Password</label><input id="pw" type="password"></p>
+  <p><label for="plan">Plan</label><select id="plan"><option value="free">Free</option><option value="pro">Pro</option><option value="team">Team</option></select></p>
+  <p><label><input type="checkbox" id="agree"> I agree to the terms</label></p>
+  <p><label class="fancy"><input type="checkbox" id="weekly"><span>Weekly digest</span></label></p>
+  <p><button type="submit" id="subscribe">Subscribe</button></p>
+</form>
+<p id="result" role="status"></p>
+<p><button id="counter" type="button">Click me</button></p>
+<div class="hidden"><button>Hidden button</button></div>
+<form action="/page2.html" method="get"><input type="search" name="q" id="search" aria-label="Search the shop"></form>
+<div id="host"></div>
+<iframe id="frame" src="/frame.html" title="Embedded widget" width="320" height="70"></iframe>
+<p><button id="covered" type="button">Under the cover</button></p>
+<div id="late"></div>
+<div id="cover"></div>
+<div class="tall"></div>
+<button id="bottom" type="button">Bottom button</button>
+<script>
+  window.__events = [];
+  for (const t of ['click', 'input', 'keydown']) document.addEventListener(t, (e) => __events.push(`${t}:${e.isTrusted}`), true);
+  document.getElementById('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = (id) => document.getElementById(id);
+    v('result').textContent = `Thanks, ${v('email').value} (${v('plan').value}, agreed=${v('agree').checked}, weekly=${v('weekly').checked})`;
+  });
+  const counter = document.getElementById('counter');
+  counter.addEventListener('click', () => { counter.dataset.n = String(Number(counter.dataset.n || 0) + 1); counter.textContent = `Clicked ${counter.dataset.n}`; });
+  document.getElementById('covered').addEventListener('click', (e) => { e.target.textContent = 'covered clicked'; });
+  const shadow = document.getElementById('host').attachShadow({ mode: 'open' });
+  const sb = document.createElement('button');
+  sb.textContent = 'Shadow button';
+  sb.addEventListener('click', () => { sb.textContent = 'shadow clicked'; });
+  shadow.appendChild(sb);
+</script>
+</body>
+</html>
