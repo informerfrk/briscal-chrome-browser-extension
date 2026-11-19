@@ -178,6 +178,7 @@ textarea.input { resize: vertical; }
 .chip.chip-auto { color: var(--warn); }
 /* A dot in the model chip shows the model's cost level (the dropdown spells it out). */
 .chip[data-cost]:not([data-cost=""])::before { content: ""; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; flex: none; background: var(--ok); }
+.chip[data-cost="lowest"]::before { background: #0ea5e9; }
 .chip[data-cost="medium"]::before { background: #f59e0b; }
 .chip[data-cost="high"]::before { background: #f97316; }
 .chip[data-cost="highest"]::before { background: var(--err); }
